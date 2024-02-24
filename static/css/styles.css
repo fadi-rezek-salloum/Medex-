@@ -1,0 +1,47 @@
+.main-sidebar,
+.main-sidebar::before {
+    width: 90%;
+}
+
+.sidebar-collapse .main-sidebar,
+.sidebar-collapse .main-sidebar::before {
+    margin-left: -90%;
+}
+
+@media screen and (max-width: 767.98px) {
+    .main-sidebar,
+    .main-sidebar::before {
+        box-shadow: none !important;
+        margin-left: -90px;
+    }
+
+    .closeBtn {
+        color: white;
+        font-size: 2rem;
+        position: absolute;
+        top: 4px;
+        right: 10px;
+        border-radius: 6px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar {
+        width: 100% !important;
+    }
+
+    .nav.nav-pills.nav-sidebar.flex-column li {
+        width: 100% !important;
+    }
+
+    .nav.nav-pills.nav-sidebar.flex-column li a {
+        width: 100% !important;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .main-sidebar,
+    .main-sidebar::before {
+        width: 250px;
+    }
+}
