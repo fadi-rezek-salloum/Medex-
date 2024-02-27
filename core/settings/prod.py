@@ -1,18 +1,15 @@
+import os
+
+import dj_database_url
 from decouple import config
 
 from .base import *
 
 ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = []
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DATABASE_URL").split("/")[-1],
-        "USER": config("DATABASE_URL").split("//")[1].split(":")[0],
-        "PASSWORD": config("DATABASE_URL").split(":")[2].split("@")[0],
-        "HOST": config("DATABASE_URL").split("@")[1].split(":")[0],
-        "PORT": config("DATABASE_URL").split(":")[-1],
-    }
+    "default": dj_database_url.config(default="sqlite:///" + os.path.join("db.sqlite3"))
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

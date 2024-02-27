@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    # Whitenoise
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     # Local Apps
     "advertisement",
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "mptt",
 ]
+
 
 SITE_ID = 1
 
