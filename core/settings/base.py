@@ -2,6 +2,7 @@ from datetime import timedelta
 from pathlib import Path
 
 from decouple import config
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -17,6 +18,8 @@ INSTALLED_APPS = [
     # Real Time
     "channels",
     "daphne",
+    # Admin Theme
+    "unfold",
     # Built-in Apps
     "django.contrib.admin",
     "django.contrib.auth",
@@ -160,3 +163,32 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 GRAPH_MODELS = {"all_applications": True, "group_models": True}
+
+
+UNFOLD = {
+    "SITE_TITLE": "Medex Admin",
+    "SITE_HEADER": "Medex Admin",
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+        "navigation": [
+            {
+                "title": _("Navigation"),
+                "separator": True,
+                "items": [
+                    {
+                        "title": _("Dashboard"),
+                        "icon": "dashboard",
+                        "link": reverse_lazy("admin:index"),
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                    {
+                        "title": _("Users"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:account_user_changelist"),
+                    },
+                ],
+            },
+        ],
+    },
+}

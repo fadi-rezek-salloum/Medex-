@@ -17,6 +17,7 @@ django-jazzmin==2.6.0
 django-js-asset==2.1.0
 django-mptt==0.15.0
 django-suit @ https://github.com/darklow/django-suit/tarball/v2#sha256=b40c916de9528ca86bcccd42d1fd54e7773e5071d2bfd9efc576039c1a441c0b
+django-unfold==0.21.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.0
 et-xmlfile==1.1.0
