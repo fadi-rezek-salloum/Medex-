@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "quote",
     "wishlist",
     "stats",
+    # Dashboard
+    "dashboard",
     # 3rd Party Apps
     "django_extensions",
     "django_filters",
@@ -187,8 +189,14 @@ UNFOLD = {
                         "icon": "people",
                         "link": reverse_lazy("admin:account_user_changelist"),
                     },
+                    {
+                        "title": _("Products"),
+                        "icon": "inventory_2",
+                        "link": reverse_lazy("admin:product_product_changelist"),
+                    },
                 ],
             },
         ],
     },
+    "DASHBOARD_CALLBACK": "dashboard.views.dashboard_callback",
 }
