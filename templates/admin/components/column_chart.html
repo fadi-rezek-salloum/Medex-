@@ -1,0 +1,63 @@
+<div id="{{id}}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script defer>
+  var options = {
+    series: [
+      {
+        name: "{{data1_title}}",
+        data: {{y1_data|safe}},
+      },
+      {
+        name: "{{data2_title}}",
+        data: {{y2_data|safe}},
+      },
+    ],
+    chart: {
+      height: 450,
+      type: "bar",
+      foreColor: "#888"
+    },
+    plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
+        },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+        show: true,
+        width: 3,
+        colors: ['transparent']
+    },
+    xaxis: {
+        categories: {{x_data|safe}}
+    },
+    yaxis: {
+        title: {
+          text: 'Users'
+        }
+    },
+    fill: {
+        opacity: 1
+    },
+    tooltip: {
+        y: {
+            formatter: function (val) {
+                if (val > 1) {
+                    return val + " Users"
+                } else {
+                    return val + " User"
+                }
+            }
+        }
+    }
+  };
+
+  var chart = new ApexCharts(document.querySelector("#{{id}}"), options);
+  chart.render();
+</script>
