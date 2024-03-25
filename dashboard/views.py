@@ -18,6 +18,17 @@ from stats.utils.admin.products.sold import (
     get_monthly_sold_products,
     get_yearly_sold_products,
 )
+from stats.utils.admin.rfq.count import (
+    get_total_approved_quotes_count,
+    get_total_pending_quotes_count,
+    get_total_quotes_count,
+    get_total_rejected_quotes_count,
+)
+from stats.utils.admin.rfq.value import (
+    get_daily_accepted_offers_value,
+    get_monthly_accepted_offers_value,
+    get_yearly_accepted_offers_value,
+)
 from stats.utils.admin.users.active import (
     get_daily_active_users,
     get_monthly_active_users,
@@ -64,6 +75,16 @@ def dashboard_callback(request, context):
         "yearly_sold": get_yearly_sold_products(),
     }
 
-    context.update({"general": general, "users": users, "products": products})
+    rfq = {
+        "count": get_total_quotes_count(),
+        "approved": get_total_approved_quotes_count(),
+        "rejected": get_total_rejected_quotes_count(),
+        "pending": get_total_pending_quotes_count(),
+        "daily_value": get_daily_accepted_offers_value(),
+        "monthly_value": get_monthly_accepted_offers_value(),
+        "yearly_value": get_yearly_accepted_offers_value(),
+    }
+
+    context.update({"general": general, "users": users, "products": products, "rfq": rfq})
 
     return context
