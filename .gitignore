@@ -169,3 +169,4 @@ staticfiles/
 data.json
 erd.dot
 erd.png
+*.http

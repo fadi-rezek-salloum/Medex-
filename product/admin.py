@@ -1,8 +1,24 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 
 from .models import Brand, Category, PrivateCategory, Product
 
-admin.site.register(Category)
-admin.site.register(Brand)
-admin.site.register(Product)
-admin.site.register(PrivateCategory)
+
+@admin.register(Category)
+class CategoryAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(Brand)
+class BrandAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(PrivateCategory)
+class PrivateCategoryAdmin(ModelAdmin):
+    pass
+
+
+@admin.register(Product)
+class ProductAdmin(ModelAdmin):
+    pass

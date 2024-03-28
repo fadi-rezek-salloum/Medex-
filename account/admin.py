@@ -1,24 +1,26 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from unfold.admin import ModelAdmin, TabularInline
 
 from .models import Address, BuyerProfile, SupplierProfile, User
 
 admin.site.register(Address)
 
 
-class BuyerProfileInline(admin.TabularInline):
+class BuyerProfileInline(TabularInline):
     model = BuyerProfile
     fields = ["profile_picture"]
     extra = 1
 
 
-class SupplierProfileInline(admin.TabularInline):
+class SupplierProfileInline(TabularInline):
     model = SupplierProfile
     fields = ["profile_picture"]
     extra = 1
 
 
-class CustomUserAdmin(BaseUserAdmin):
+@admin.register(User)
+class CustomUserAdmin(ModelAdmin, BaseUserAdmin):
     inlines = [BuyerProfileInline, SupplierProfileInline]
 
     def get_inline_instances(self, request, obj=None):
@@ -46,6 +48,3 @@ class CustomUserAdmin(BaseUserAdmin):
     list_filter = ("is_active", "is_supplier", "is_buyer")
     search_fields = ("email", "full_name")
     ordering = ("email",)
-
-
-admin.site.register(User, CustomUserAdmin)

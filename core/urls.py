@@ -14,4 +14,5 @@ urlpatterns = [
     path("api/chat/", include("chat.urls", namespace="chat")),
     path("api/stats/", include("stats.urls", namespace="stats")),
     path("api/company/", include("company.urls", namespace="company")),
+    path("api/wallet/", include("wallet.urls", namespace="wallet")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

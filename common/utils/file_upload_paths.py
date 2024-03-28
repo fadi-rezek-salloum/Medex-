@@ -86,3 +86,13 @@ def company_cover_picture_path(instance, filename):
         "cover_pictures",
         filename,
     )
+
+
+def withdraw_approve_receipt_path(instance, filename):
+    return os.path.join(
+        "transaction",
+        "withdraw",
+        instance.user.full_name,
+        "receipts",
+        filename,
+    )

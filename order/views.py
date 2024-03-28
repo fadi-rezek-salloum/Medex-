@@ -17,6 +17,7 @@ from stats.utils.supplier.get_monthly_new_buyers import get_monthly_new_buyers
 from stats.utils.supplier.get_monthly_sales import get_monthly_sales
 from stats.utils.supplier.get_monthly_sales_count import get_monthly_sales_count
 from stats.utils.supplier.get_monthly_threads_count import get_monthly_threads_count
+from wallet.services import TransactionService
 
 from .mixins import (
     CheckProductManagerGroupMixin,
@@ -289,6 +290,15 @@ class OrderReturnView(CheckSaleManagerGroupMixin, generics.GenericAPIView):
                 file_serializer.is_valid(raise_exception=True)
                 file_serializer.save(return_request=return_instance)
 
+            TransactionService.create_transaction(
+                user.id,
+                user.wallet.id,
+                order_item.total_price,
+                "R",
+                "P",
+                return_order=return_instance,
+            )
+
         return Response(status=status.HTTP_200_OK)
 
 
@@ -323,6 +333,10 @@ class OrderReturnApproveView(CheckSupplierSaleManagerGroupMixin, generics.Generi
 
         rr.save()
 
+        transaction = TransactionService.retrieve_transaction_by_return_id(rr.id)
+
+        TransactionService.approve_transaction(transaction.id)
+
         return Response(status=status.HTTP_200_OK)
 
 
@@ -341,5 +355,9 @@ class OrderReturnDeclineView(CheckSupplierSaleManagerGroupMixin, generics.Generi
         rr.decline_reason = request.POST.get("reason")
 
         rr.save()
+
+        transaction = TransactionService.retrieve_transaction_by_return_id(rr.id)
+
+        TransactionService.decline_transaction(transaction.id)
 
         return Response(status=status.HTTP_200_OK)

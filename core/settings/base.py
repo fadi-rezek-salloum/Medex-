@@ -27,8 +27,6 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    # Whitenoise
-    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     # Local Apps
     "advertisement",
@@ -39,8 +37,9 @@ INSTALLED_APPS = [
     "order",
     "product",
     "quote",
-    "wishlist",
     "stats",
+    "wallet",
+    "wishlist",
     # Dashboard
     "dashboard",
     # 3rd Party Apps
@@ -49,6 +48,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "mptt",
+    # Whitenoise
+    "whitenoise.runserver_nostatic",
 ]
 
 
@@ -86,7 +87,6 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = "core.wsgi.application"
 ASGI_APPLICATION = "core.asgi.application"
 
 
@@ -143,7 +143,7 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=20),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=190),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=60),
     "ROTATE_REFRESH_TOKENS": True,
     "UPDATE_LAST_LOGIN": True,
