@@ -1,0 +1,597 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-02 18:32+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+#: account/managers.py:16
+msgid "The Email must be set"
+msgstr ""
+
+#: account/managers.py:34
+msgid "Superuser must have is_staff=True."
+msgstr ""
+
+#: account/managers.py:36
+msgid "Superuser must have is_superuser=True."
+msgstr ""
+
+#: account/models.py:16
+msgid "Country"
+msgstr ""
+
+#: account/models.py:17
+msgid "State"
+msgstr ""
+
+#: account/models.py:18
+msgid "City"
+msgstr ""
+
+#: account/models.py:20
+msgid "Postal Code"
+msgstr ""
+
+#: account/models.py:22
+msgid "Address Line 1"
+msgstr ""
+
+#: account/models.py:23
+msgid "Address Line 2"
+msgstr ""
+
+#: account/models.py:32 contact/models.py:7
+msgid "Email"
+msgstr ""
+
+#: account/models.py:33
+msgid "Full Name"
+msgstr ""
+
+#: account/models.py:38
+msgid "Is Admin"
+msgstr ""
+
+#: account/models.py:39
+msgid "Is Supplier"
+msgstr ""
+
+#: account/models.py:40
+msgid "Is Buyer"
+msgstr ""
+
+#: account/models.py:42
+msgid "Phone Number"
+msgstr ""
+
+#: account/models.py:50
+msgid "Shipping Address"
+msgstr ""
+
+#: account/models.py:59
+msgid "Billing Address"
+msgstr ""
+
+#: account/models.py:64 product/models.py:154
+msgid "Added On"
+msgstr ""
+
+#: account/models.py:65 company/models.py:46 product/models.py:155
+msgid "Edited On"
+msgstr ""
+
+#: account/models.py:80 account/models.py:95 company/models.py:30
+msgid "Profile Picture"
+msgstr ""
+
+#: account/views.py:39 account/views.py:74
+msgid "Medex Account Activation"
+msgstr ""
+
+#: account/views.py:125
+msgid "Your account has been successfully activated!"
+msgstr ""
+
+#: account/views.py:131
+msgid "Activation link expired!"
+msgstr ""
+
+#: account/views.py:135
+msgid "Invalid token!"
+msgstr ""
+
+#: account/views.py:151
+msgid "Medex Account Password Reset"
+msgstr ""
+
+#: advertisement/models.py:9 product/models.py:120
+msgid "Thumbnail"
+msgstr ""
+
+#: chat/models.py:47
+msgid "First User"
+msgstr ""
+
+#: chat/models.py:53
+msgid "Second User"
+msgstr ""
+
+#: chat/models.py:56
+msgid "Updated Date"
+msgstr ""
+
+#: chat/models.py:57
+msgid "Created Date"
+msgstr ""
+
+#: chat/models.py:78
+msgid "Thread"
+msgstr ""
+
+#: chat/models.py:80
+msgid "Sender"
+msgstr ""
+
+#: chat/models.py:82 contact/models.py:8
+msgid "Message"
+msgstr ""
+
+#: chat/models.py:84
+msgid "Created"
+msgstr ""
+
+#: chat/models.py:86
+msgid "Is Read"
+msgstr ""
+
+#: common/validators/image_extension_validator.py:12
+msgid "Invalid file extension. Only JPG, JPEG, SVG, and PNG files are allowed"
+msgstr ""
+
+#: common/validators/image_pdf_extension_validator.py:12
+msgid "Invalid file extension. Only JPG, JPEG, PNG, and PDF files are allowed"
+msgstr ""
+
+#: common/validators/image_video_extension_validator.py:12
+msgid ""
+"Invalid file extension. Only JPG, JPEG, PNG, MP4, AVI and WAV files are "
+"allowed"
+msgstr ""
+
+#: company/models.py:16
+msgid "Company's Owner"
+msgstr ""
+
+#: company/models.py:19
+msgid "Company Name"
+msgstr ""
+
+#: company/models.py:20
+msgid "Company's Email address"
+msgstr ""
+
+#: company/models.py:21
+msgid "Company's Phone Number"
+msgstr ""
+
+#: company/models.py:25
+msgid "Company's Website"
+msgstr ""
+
+#: company/models.py:27
+msgid "Company's Bio"
+msgstr ""
+
+#: company/models.py:38
+msgid "Cover Picture"
+msgstr ""
+
+#: company/models.py:45
+msgid "Company Created On"
+msgstr ""
+
+#: contact/models.py:6
+msgid "User Name"
+msgstr ""
+
+#: core/settings/base.py:123
+msgid "English"
+msgstr ""
+
+#: core/settings/base.py:124
+msgid "Arabic"
+msgstr ""
+
+#: core/settings/base.py:178
+msgid "Navigation"
+msgstr ""
+
+#: core/settings/base.py:182
+msgid "Dashboard"
+msgstr ""
+
+#: core/settings/base.py:188
+msgid "Users"
+msgstr ""
+
+#: core/settings/base.py:193 order/models.py:67
+msgid "Products"
+msgstr ""
+
+#: order/models.py:16
+msgid "Ordered"
+msgstr ""
+
+#: order/models.py:17
+msgid "Shipping is being prepared"
+msgstr ""
+
+#: order/models.py:18 order/models.py:95
+msgid "On the way"
+msgstr ""
+
+#: order/models.py:19
+msgid "Delivered"
+msgstr ""
+
+#: order/models.py:21 order/models.py:64 order/models.py:106
+msgid "Buyer"
+msgstr ""
+
+#: order/models.py:23 quote/models.py:55
+msgid "Quantity"
+msgstr ""
+
+#: order/models.py:28
+msgid "Shipping Status"
+msgstr ""
+
+#: order/models.py:59
+msgid "Cash"
+msgstr ""
+
+#: order/models.py:69
+msgid "Ordered Date"
+msgstr ""
+
+#: order/models.py:71
+msgid "Is Paid"
+msgstr ""
+
+#: order/models.py:74
+msgid "Payment Method"
+msgstr ""
+
+#: order/models.py:91
+msgid "Not Requested"
+msgstr ""
+
+#: order/models.py:92
+msgid "Applied"
+msgstr ""
+
+#: order/models.py:93
+msgid "Declined by Supplier"
+msgstr ""
+
+#: order/models.py:94
+msgid "Approved by Supplier"
+msgstr ""
+
+#: order/models.py:96
+msgid "Return Completed"
+msgstr ""
+
+#: order/models.py:99
+msgid "Poor quality"
+msgstr ""
+
+#: order/models.py:100
+msgid "Wrong materials"
+msgstr ""
+
+#: order/models.py:101
+msgid "Shipped to a wrong address"
+msgstr ""
+
+#: order/models.py:111
+msgid "Tracking Number"
+msgstr ""
+
+#: order/models.py:114
+msgid "Return Status"
+msgstr ""
+
+#: order/models.py:121
+msgid "Return Reason"
+msgstr ""
+
+#: product/models.py:18
+msgid "Category Name"
+msgstr ""
+
+#: product/models.py:20
+msgid "Category Image"
+msgstr ""
+
+#: product/models.py:53
+msgid "Brand Name"
+msgstr ""
+
+#: product/models.py:55
+msgid "Brand Image"
+msgstr ""
+
+#: product/models.py:73 quote/models.py:91
+msgid "Supplier"
+msgstr ""
+
+#: product/models.py:74
+msgid "Product Name"
+msgstr ""
+
+#: product/models.py:75
+msgid "Description"
+msgstr ""
+
+#: product/models.py:78
+msgid "Price"
+msgstr ""
+
+#: product/models.py:81
+msgid "Sale Price"
+msgstr ""
+
+#: product/models.py:89
+msgid "Price Range - Min"
+msgstr ""
+
+#: product/models.py:97
+msgid "Price Range - Max"
+msgstr ""
+
+#: product/models.py:110
+msgid "Category"
+msgstr ""
+
+#: product/models.py:113 quote/models.py:96
+msgid "Brand"
+msgstr ""
+
+#: product/models.py:115
+msgid "Stock Quantity"
+msgstr ""
+
+#: product/models.py:116
+msgid "Is Available ?"
+msgstr ""
+
+#: product/models.py:117
+msgid "Is Returnable ?"
+msgstr ""
+
+#: product/models.py:118
+msgid "Maximum Days To Return"
+msgstr ""
+
+#: product/models.py:127
+msgid "Image 1"
+msgstr ""
+
+#: product/models.py:134
+msgid "Image 2"
+msgstr ""
+
+#: product/models.py:141
+msgid "Image 3"
+msgstr ""
+
+#: product/models.py:148
+msgid "Image 4"
+msgstr ""
+
+#: product/models.py:169
+msgid "Private Category Name"
+msgstr ""
+
+#: product/models.py:173
+msgid "Private Category Supplier"
+msgstr ""
+
+#: quote/models.py:41
+msgid "Created By"
+msgstr ""
+
+#: quote/models.py:47
+msgid "Target Supplier"
+msgstr ""
+
+#: quote/models.py:53 wishlist/models.py:11
+msgid "Product"
+msgstr ""
+
+#: quote/models.py:56
+msgid "Unit"
+msgstr ""
+
+#: quote/models.py:58
+msgid "Requirements"
+msgstr ""
+
+#: quote/models.py:70
+msgid "Related Quote"
+msgstr ""
+
+#: quote/models.py:74
+msgid "Attachment"
+msgstr ""
+
+#: quote/models.py:88
+msgid "Target Quote"
+msgstr ""
+
+#: quote/models.py:97
+msgid "Available Amount"
+msgstr ""
+
+#: quote/models.py:100
+msgid "Price (Per Product)"
+msgstr ""
+
+#: quote/models.py:102
+msgid "Price (Total)"
+msgstr ""
+
+#: quote/models.py:104
+msgid "TAX"
+msgstr ""
+
+#: quote/models.py:107
+msgid "Delivery Address"
+msgstr ""
+
+#: quote/models.py:111
+msgid "Payment Type"
+msgstr ""
+
+#: templates/admin/index.html:12
+msgid "Django site admin"
+msgstr ""
+
+#: templates/admin/index.html:22
+msgid "Django administration"
+msgstr ""
+
+#: templates/emails/activate_email.html:9
+msgid "Email Confirmation"
+msgstr ""
+
+#: templates/emails/activate_email.html:99
+msgid "Welcome to Medex"
+msgstr ""
+
+#: templates/emails/activate_email.html:170
+msgid "Confirm Your Email Address"
+msgstr ""
+
+#: templates/emails/activate_email.html:202
+msgid ""
+" Tap the button below to confirm your email address. If you didn't create an "
+"account in"
+msgstr ""
+
+#: templates/emails/activate_email.html:204
+#: templates/emails/reset_password.html:204
+msgid "you can safely delete this email."
+msgstr ""
+
+#: templates/emails/activate_email.html:237
+msgid "Activate Your Account"
+msgstr ""
+
+#: templates/emails/activate_email.html:263
+msgid ""
+"\n"
+"                  If that doesn't work, copy and paste the following link "
+"in\n"
+"                  your browser:\n"
+"                  "
+msgstr ""
+
+#: templates/emails/activate_email.html:305
+msgid ""
+"You received this email because we received a request for creating a new "
+"account. If you didn't request the registration request, you can safely "
+"delete this email."
+msgstr ""
+
+#: templates/emails/reset_password.html:9
+msgid "Reset Password"
+msgstr ""
+
+#: templates/emails/reset_password.html:99
+msgid "Password Reset In Medex"
+msgstr ""
+
+#: templates/emails/reset_password.html:170
+#: templates/emails/reset_password.html:237
+msgid "Reset Your Password"
+msgstr ""
+
+#: templates/emails/reset_password.html:202
+msgid ""
+" Tap the button below to reset your password. If you haven't requested a "
+"password reset in"
+msgstr ""
+
+#: templates/emails/reset_password.html:263
+msgid "If that doesn't work, copy and paste the following link in your browser"
+msgstr ""
+
+#: templates/emails/reset_password.html:302
+msgid ""
+"You received this email because we received a request for resetting your "
+"password. If you didn't request the reset, you can safely delete this email."
+msgstr ""
+
+#: wallet/models.py:25
+msgid "Purchase"
+msgstr ""
+
+#: wallet/models.py:26
+msgid "Return"
+msgstr ""
+
+#: wallet/models.py:27
+msgid "Withdrawal"
+msgstr ""
+
+#: wallet/models.py:30
+msgid "Approved"
+msgstr ""
+
+#: wallet/models.py:31
+msgid "Denied"
+msgstr ""
+
+#: wallet/models.py:32
+msgid "Pending"
+msgstr ""
+
+#: wallet/views.py:82
+msgid "Transaction created successfully"
+msgstr ""
+
+#: wallet/views.py:102
+msgid "User does not have a wallet"
+msgstr ""
+
+#: wallet/views.py:113
+msgid "Withdrawal amount exceeds wallet balance"
+msgstr "المبلغ المسحوب يتجاوز رصيد المحفظة"
+
+#: wallet/views.py:120
+msgid "Total withdrawals exceed wallet balance"
+msgstr "مجموع المسحوبات يتجاوز رصيد المحفظة"
+
+#: wallet/views.py:131
+msgid "Withdrawal request was successfully created"
+msgstr ""
+
+#: wishlist/models.py:10
+msgid "User"
+msgstr ""

@@ -194,6 +194,11 @@ UNFOLD = {
                         "icon": "inventory_2",
                         "link": reverse_lazy("admin:product_product_changelist"),
                     },
+                    {
+                        "title": _("Transactions"),
+                        "icon": "receipt_long",
+                        "link": reverse_lazy("admin:wallet_transaction_changelist"),
+                    },
                 ],
             },
         ],

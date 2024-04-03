@@ -76,6 +76,28 @@ class TransactionService:
         )
 
     @staticmethod
+    def retrieve_transactions_by_status(wallet_id=None, wallet=None, status=None):
+        """
+        Retrieve transactions associated with a specific status.
+        """
+        if not status:
+            raise ValueError("Status must be provided")
+        if wallet is None and wallet_id is None:
+            raise ValueError("Either wallet_id or wallet instance must be provided")
+
+        transactions = (
+            Transaction.objects.filter(wallet_id=wallet_id, transaction_status=status)
+            if wallet_id is not None
+            else (
+                Transaction.objects.filter(wallet=wallet, transaction_status=status)
+                if wallet
+                else None
+            )
+        )
+
+        return transactions
+
+    @staticmethod
     def retrieve_transactions_by_wallet(wallet_id=None, wallet=None):
         """
         Retrieve transactions associated with a wallet.
@@ -107,20 +129,25 @@ class TransactionService:
         return transaction
 
     @staticmethod
-    def calculate_total_withdrawals_amount(wallet_id=None, wallet=None):
+    def calculate_total_withdrawals_amount(wallet_id=None, wallet=None, status=None):
         """
         Calculate the total amount of withdrawals for a wallet.
         """
+
         if wallet_id is None and wallet is None:
             raise ValueError("Either wallet_id or wallet instance must be provided")
 
         qs = (
             Transaction.objects.filter(
-                wallet__id=wallet_id, transaction_type=Transaction.TRANSACTION_TYPES_CHOICES.W
+                wallet__id=wallet_id,
+                transaction_type=Transaction.TRANSACTION_TYPES_CHOICES.W,
+                transaction_status=status,
             )
             if wallet_id is not None
             else Transaction.objects.filter(
-                wallet=wallet, transaction_type=Transaction.TRANSACTION_TYPES_CHOICES.W
+                wallet=wallet.id,
+                transaction_type=Transaction.TRANSACTION_TYPES_CHOICES.W,
+                transaction_status=status,
             )
         )
 

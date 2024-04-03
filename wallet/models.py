@@ -28,7 +28,7 @@ class Transaction(models.Model):
 
     class TRANSACTION_STATUS_CHOICES(models.TextChoices):
         A = "A", _("Approved")
-        D = "D", _("Declined")
+        D = "D", _("Denied")
         P = "P", _("Pending")
 
     id = models.UUIDField(
