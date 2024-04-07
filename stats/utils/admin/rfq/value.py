@@ -53,6 +53,9 @@ def get_yearly_accepted_offers_value():
         "min_year", today.year
     )
 
+    if not earliest_year:
+        earliest_year = today.year
+
     year_range = range(earliest_year, today.year + 1)
 
     yearly_accepted_offers_value = []
