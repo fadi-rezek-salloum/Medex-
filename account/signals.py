@@ -26,10 +26,10 @@ def create_user_wallet(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def create_company_from_user(sender, instance, created, **kwargs):
-    if created and instance.is_supplier:
+    if created:
         with transaction.atomic():
             company_instance, _ = Company.objects.get_or_create(
-                supplier=instance,
+                user=instance,
                 defaults={
                     "name": instance.full_name,
                     "email": instance.email,

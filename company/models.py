@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Company(models.Model):
-    supplier = models.OneToOneField(
+    user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
         verbose_name=_("Company's Owner"),
@@ -25,6 +25,8 @@ class Company(models.Model):
     website = models.URLField(_("Company's Website"), null=True, blank=True)
 
     bio = models.TextField(_("Company's Bio"), null=True, blank=True)
+
+    register = models.CharField(_("Commercial Register"), max_length=255, null=True, blank=True)
 
     company_profile_picture = models.ImageField(
         _("Profile Picture"),

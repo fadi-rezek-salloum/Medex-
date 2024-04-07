@@ -1,10 +1,8 @@
 from rest_framework.exceptions import PermissionDenied
 
 
-class CheckSupplierAdminGroupMixin:
-    allowed_group_names = [
-        "Supplier Admin",
-    ]
+class CheckAdminGroupMixin:
+    allowed_group_names = ["Supplier Admin", "Buyer Admin"]
 
     def check_permissions(self, request):
         if not request.method == "GET":
