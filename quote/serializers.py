@@ -5,7 +5,7 @@ from django.utils.timesince import timesince
 from product.models import Product
 from rest_framework import serializers
 
-from .models import QuoteAttachment, QuoteOffer, QuoteRequest
+from .models import QuoteAttachment, QuoteOffer, QuoteProduct, QuoteRequest
 
 
 class QuoteAttachmentSerializer(serializers.ModelSerializer):
@@ -14,12 +14,18 @@ class QuoteAttachmentSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class QuoteProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuoteProduct
+        fields = "__all__"
+
+
 class QuoteSerializer(serializers.ModelSerializer):
     user = UserSerializer(allow_null=True, required=False)
-    attachments = serializers.SerializerMethodField()
+    attachments = QuoteAttachmentSerializer(many=True, read_only=True)
     created_since = serializers.SerializerMethodField()
     unit_display = serializers.SerializerMethodField(read_only=True)
-    product_name = serializers.SerializerMethodField(read_only=True)
+    products = QuoteProductSerializer(many=True)
     due_date_display = serializers.SerializerMethodField(read_only=True)
     due_time_display = serializers.SerializerMethodField(read_only=True)
 
@@ -37,19 +43,6 @@ class QuoteSerializer(serializers.ModelSerializer):
 
     def get_unit_display(self, obj):
         return obj.get_unit_display()
-
-    def get_product_name(self, obj):
-        products = Product.objects.filter(
-            Q(slug__icontains=obj.product) | Q(name__icontains=obj.product)
-        ).first()
-
-        try:
-            if products:
-                return products.name
-            else:
-                return obj.product
-        except AttributeError:
-            return obj.product
 
     def get_due_date_display(self, obj):
         return obj.due_date.date()

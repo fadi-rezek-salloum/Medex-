@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 User = get_user_model()
 
 
-class QuoteRequest(models.Model):
+class QuoteProduct(models.Model):
     class UNIT_CHOICES(models.TextChoices):
         BAG = "bag", "Bag / Bags"
         BARREL = "barrel", "Barrel / Barrels"
@@ -35,6 +35,25 @@ class QuoteRequest(models.Model):
         SQUARE = "square", "Square Meter / Square Meters"
         TON = "ton", "Ton / Tons"
 
+    name = models.CharField(_("Product"), max_length=255)
+
+    quantity = models.PositiveBigIntegerField(_("Quantity"))
+    unit = models.CharField(_("Unit"), max_length=50, choices=UNIT_CHOICES.choices)
+
+    product_price = models.DecimalField(
+        _("Price (Per Product)"), max_digits=10, decimal_places=2
+    )
+
+    tax = models.DecimalField(_("TAX"), max_digits=3, decimal_places=2, default=0)
+
+    description = models.TextField(_("Description"))
+
+    def __str__(self):
+        return self.name
+
+
+class QuoteRequest(models.Model):
+
     # id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4, editable=False)
 
     user = models.ForeignKey(
@@ -50,12 +69,7 @@ class QuoteRequest(models.Model):
         related_name="quote_requests_as_supplier",
     )
 
-    product = models.CharField(_("Product"), max_length=255)
-
-    quantity = models.PositiveBigIntegerField(_("Quantity"))
-    unit = models.CharField(_("Unit"), max_length=50, choices=UNIT_CHOICES.choices)
-
-    requirements = models.TextField(_("Requirements"))
+    product = models.ManyToManyField(QuoteProduct)
 
     created = models.DateTimeField(auto_now_add=True)
 

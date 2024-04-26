@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .mixins import CheckQuoteManagerGroupMixin
 from .models import QuoteOffer, QuoteRequest
@@ -14,60 +15,50 @@ from .serializers import QuoteAttachmentSerializer, QuoteOfferSerializer, QuoteS
 
 
 class ListCreateQuoteView(CheckQuoteManagerGroupMixin, ListCreateAPIView):
-    permission_classes = [
-        IsAuthenticated,
-    ]
+    permission_classes = [IsAuthenticated]
     serializer_class = QuoteSerializer
     queryset = QuoteRequest.objects.all()
 
     def create(self, request, *args, **kwargs):
         try:
-            attachments = request.data.pop("attachments")
+            attachments = request.data.pop("attachments", [])
+            products = request.data.pop("products", [])
         except Exception:
             attachments = []
+            products = []
 
         serializer = self.serializer_class(data=request.data)
-
         serializer.is_valid(raise_exception=True)
-        quote = serializer.save()
-        quote.user = request.user
-        quote.save()
+
+        quote = serializer.save(user=request.user)
+
+        quote.products.set(products)
 
         for attachment in attachments:
             attachment_serializer = QuoteAttachmentSerializer(
                 data={"quote": quote.id, "attachment": attachment}
             )
-
             attachment_serializer.is_valid(raise_exception=True)
-
             attachment_serializer.save()
 
         return Response(status=status.HTTP_201_CREATED)
 
     def get_queryset(self):
         qs = super().get_queryset()
-
-        if self.request.user.parent is not None:
-            user = self.request.user.parent
-        else:
-            user = self.request.user
-
+        user = (
+            self.request.user.parent
+            if self.request.user.parent is not None
+            else self.request.user
+        )
         now = datetime.now()
 
         if user.is_buyer:
-            if user.parent is not None:
-                return qs.filter(user__parent=user, due_date__gte=now)
-            else:
-                return qs.filter(user=user, due_date__gte=now)
-
+            return qs.filter(user__parent=user if user.parent else user, due_date__gte=now)
         elif user.is_supplier:
-            if user.parent is not None:
-                return qs.filter(
-                    Q(supplier=user.parent) | Q(supplier__isnull=True), due_date__gte=now
-                )
-            else:
-                return qs.filter(Q(supplier=user) | Q(supplier__isnull=True), due_date__gte=now)
-
+            return qs.filter(
+                Q(supplier=user.parent if user.parent else user) | Q(supplier__isnull=True),
+                due_date__gte=now,
+            )
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -138,3 +129,29 @@ class RetrieveQuoteOfferView(CheckQuoteManagerGroupMixin, RetrieveAPIView):
             return Response(status=status.HTTP_200_OK)
 
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class RetrieveUpdateInvoiceView(CheckQuoteManagerGroupMixin, APIView):
+    def get(self, request, pk=None):
+        if pk:
+            try:
+                instance = QuoteOffer.objects.get(pk=pk)
+                serializer = QuoteOfferSerializer(instance)
+                return Response(serializer.data)
+            except QuoteOffer.DoesNotExist:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            queryset = QuoteOffer.objects.all()
+            serializer = QuoteOfferSerializer(queryset, many=True)
+            return Response(serializer.data)
+
+    def put(self, request, pk):
+        try:
+            instance = QuoteOffer.objects.get(pk=pk)
+            serializer = QuoteOfferSerializer(instance, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except QuoteOffer.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
