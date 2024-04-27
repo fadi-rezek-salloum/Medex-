@@ -25,7 +25,7 @@ from .mixins import (
     CheckSupplierSaleManagerGroupMixin,
 )
 from .models import Order, OrderItem, ReturnRequest
-from .pagination import OrderItemPagination
+from .pagination import OrderItemPagination, ReturnRequestPagination
 from .serializers import (
     OrderItemsSerializer,
     OrderSerializer,
@@ -249,10 +249,13 @@ class OrderItemShippingAdvanceView(CheckSupplierSaleManagerGroupMixin, generics.
 
 class OrderReturnView(CheckSaleManagerGroupMixin, generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
+    serializer_class = ReturnRequestSerializer
+    queryset = ReturnRequest.objects.all()
 
     def get(self, request, *args, **kwargs):
         req = get_object_or_404(ReturnRequest, id=kwargs["id"])
-        serializer = ReturnRequestSerializer(req)
+        serializer_context = self.get_serializer_context()
+        serializer = ReturnRequestSerializer(req, context=serializer_context)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
@@ -306,6 +309,7 @@ class OrderReturnListView(CheckSaleManagerGroupMixin, generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = ReturnRequest.objects.all()
     serializer_class = ReturnRequestSerializer
+    pagination_class = ReturnRequestPagination
 
     def get_queryset(self):
         qs = super().get_queryset()

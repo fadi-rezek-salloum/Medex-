@@ -36,6 +36,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     groups = serializers.SerializerMethodField(read_only=True)
 
+    created_date = serializers.SerializerMethodField(read_only=True)
+    created_time = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = User
         fields = (
@@ -50,10 +53,18 @@ class UserSerializer(serializers.ModelSerializer):
             "is_buyer",
             "is_supplier",
             "groups",
+            "created_date",
+            "created_time",
         )
         extra_kwargs = {
             "password": {"write_only": True},
         }
+
+    def get_created_date(self, obj):
+        return obj.created.date()
+
+    def get_created_time(self, obj):
+        return obj.created.time()
 
     def get_groups(self, obj):
         group_mappings = {
