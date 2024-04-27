@@ -2,7 +2,8 @@ import uuid
 from collections.abc import Iterable
 
 from common.utils.file_upload_paths import return_request_files_path
-from common.validators.image_video_extension_validator import image_video_extension_validator
+from common.validators.image_video_extension_validator import \
+    image_video_extension_validator
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _

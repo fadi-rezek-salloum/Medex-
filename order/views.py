@@ -91,7 +91,7 @@ class OrderItemListView(CheckSaleManagerGroupMixin, generics.ListAPIView):
     queryset = OrderItem.objects.all().order_by("-created")
 
     def get_queryset(self):
-        qs = super().get_queryset()
+        qs = OrderItem.objects.all().order_by("-created")
 
         if self.request.user.is_supplier:
             qs = qs.filter(
