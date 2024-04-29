@@ -3,11 +3,12 @@ from datetime import datetime
 
 from account.serializers import AddressSerializer
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 from .mixins import CheckQuoteManagerGroupMixin
 from .models import QuoteOffer, QuoteRequest
@@ -131,27 +132,35 @@ class RetrieveQuoteOfferView(CheckQuoteManagerGroupMixin, RetrieveAPIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class RetrieveUpdateInvoiceView(CheckQuoteManagerGroupMixin, APIView):
-    def get(self, request, pk=None):
-        if pk:
-            try:
-                instance = QuoteOffer.objects.get(pk=pk)
-                serializer = QuoteOfferSerializer(instance)
-                return Response(serializer.data)
-            except QuoteOffer.DoesNotExist:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-        else:
-            queryset = QuoteOffer.objects.all()
-            serializer = QuoteOfferSerializer(queryset, many=True)
-            return Response(serializer.data)
+# CheckQuoteManagerGroupMixin
+class RetrieveUpdateInvoiceViewSet(ModelViewSet):
+    serializer_class = QuoteOfferSerializer
+    queryset = QuoteOffer.objects.all()
+    http_method_names = ["GET", "PUT"]
+    permission_classes = [
+        IsAuthenticated,
+    ]
 
-    def put(self, request, pk):
-        try:
-            instance = QuoteOffer.objects.get(pk=pk)
-            serializer = QuoteOfferSerializer(instance, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except QuoteOffer.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+    # def get(self, request, pk=None):
+    #     if pk:
+    #         try:
+    #             instance = QuoteOffer.objects.get(pk=pk)
+    #             serializer = QuoteOfferSerializer(instance)
+    #             return Response(serializer.data)
+    #         except QuoteOffer.DoesNotExist:
+    #             return Response(status=status.HTTP_404_NOT_FOUND)
+    #     else:
+    #         queryset = QuoteOffer.objects.all()
+    #         serializer = QuoteOfferSerializer(queryset, many=True)
+    #         return Response(serializer.data)
+
+    # def put(self, request, pk):
+    #     try:
+    #         instance = QuoteOffer.objects.get(pk=pk)
+    #         serializer = QuoteOfferSerializer(instance, data=request.data)
+    #         if serializer.is_valid():
+    #             serializer.save()
+    #             return Response(serializer.data)
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     except QuoteOffer.DoesNotExist:
+    #         return Response(status=status.HTTP_404_NOT_FOUND)

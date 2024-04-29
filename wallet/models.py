@@ -21,15 +21,17 @@ class Wallet(models.Model):
 
 
 class Transaction(models.Model):
-    class TRANSACTION_TYPES_CHOICES(models.TextChoices):
-        P = "P", _("Purchase")
-        R = "R", _("Return")
-        W = "W", _("Withdrawal")
+    TRANSACTION_TYPES_CHOICES = [
+        ("P", _("Purchase")),
+        ("R", _("Return")),
+        ("W", _("Withdrawal")),
+    ]
 
-    class TRANSACTION_STATUS_CHOICES(models.TextChoices):
-        A = "A", _("Approved")
-        D = "D", _("Denied")
-        P = "P", _("Pending")
+    TRANSACTION_STATUS_CHOICES = [
+        ("A", _("Approved")),
+        ("D", _("Denied")),
+        ("P", _("Pending")),
+    ]
 
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False, db_index=True, unique=True
