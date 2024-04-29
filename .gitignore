@@ -170,3 +170,4 @@ data.json
 erd.dot
 erd.png
 *.http
+redis-data/
