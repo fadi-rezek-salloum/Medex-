@@ -1,0 +1,533 @@
+{% extends 'unfold/layouts/base_simple.html' %}
+
+{% load cache unfold i18n %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block title %}
+    {% if subtitle %}
+        {{ subtitle }} |
+    {% endif %}
+
+    {{ title }} | {{ site_title|default:_('Django site admin') }}
+{% endblock %}
+
+{% block extrahead %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+{% endblock extrahead %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('Django administration') }}
+        </a>
+    </h1>
+{% endblock %}
+
+{% block content %}
+    
+    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+            <li class="me-2" role="presentation">
+                <button class="flex gap-2 p-4 border-b-2 rounded-t-lg" id="general-tab" data-tabs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="false">
+                    <svg class="w-5 h-5 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"/>
+                    </svg>
+                    General Stats
+                </button>
+            </li>
+            <li class="me-2" role="presentation">
+                <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="user-tab" data-tabs-target="#user" type="button" role="tab" aria-controls="user" aria-selected="false">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.121 1.879-.707-.707m5.656 5.656-.707-.707m-4.242 0-.707.707m5.656-5.656-.707.707M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                    </svg>
+                    Users Stats
+                </button>
+            </li>
+            <li class="me-2" role="presentation">
+                <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="product-tab" data-tabs-target="#product" type="button" role="tab" aria-controls="product" aria-selected="false">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 12v1h4v-1m4 7H6a1 1 0 0 1-1-1V9h14v9a1 1 0 0 1-1 1ZM4 5h16a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
+                    </svg>
+                    Products Stats
+                </button>
+            </li>
+            <li class="me-2" role="presentation">
+                <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="rfq-tab" data-tabs-target="#rfq" type="button" role="tab" aria-controls="rfq" aria-selected="false">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 8h6m-6 4h6m-6 4h6M6 3v18l2-2 2 2 2-2 2 2 2-2 2 2V3l-2 2-2-2-2 2-2-2-2 2-2-2Z"/>
+                    </svg>
+                    RFQ Stats
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div id="default-tab-content">
+        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="general" role="tabpanel" aria-labelledby="general-tab">
+            <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                Average Income
+            </h2>
+            {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
+                {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                    {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                        <span>
+                            <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v15a1 1 0 0 0 1 1h15M8 16l2.5-5.5 3 3L17.273 7 20 9.667"/>
+                            </svg>
+                        </span>
+                        <b>
+                            Today
+                        </b>
+                    {% endcomponent %}
+
+                    {% component "unfold/components/title.html" with class="mt-3" %}
+                        {{general.avg.day}} S.A.R
+                    {% endcomponent %}
+                {% endcomponent %}
+
+                {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                    {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                        <span>
+                            <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
+                            </svg>
+                        </span>
+                        <b>
+                            This Month
+                        </b>
+                    {% endcomponent %}
+
+                    {% component "unfold/components/title.html" with class="mt-3" %}
+                        {{general.avg.month}} S.A.R
+                    {% endcomponent %}
+                {% endcomponent %}
+
+                {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                    {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                        <span>
+                            <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M9 15a6 6 0 1 1 12 0 6 6 0 0 1-12 0Zm3.845-1.855a2.4 2.4 0 0 1 1.2-1.226 1 1 0 0 1 1.992-.026c.426.15.809.408 1.111.749a1 1 0 1 1-1.496 1.327.682.682 0 0 0-.36-.213.997.997 0 0 1-.113-.032.4.4 0 0 0-.394.074.93.93 0 0 0 .455.254 2.914 2.914 0 0 1 1.504.9c.373.433.669 1.092.464 1.823a.996.996 0 0 1-.046.129c-.226.519-.627.94-1.132 1.192a1 1 0 0 1-1.956.093 2.68 2.68 0 0 1-1.227-.798 1 1 0 1 1 1.506-1.315.682.682 0 0 0 .363.216c.038.009.075.02.111.032a.4.4 0 0 0 .395-.074.93.93 0 0 0-.455-.254 2.91 2.91 0 0 1-1.503-.9c-.375-.433-.666-1.089-.466-1.817a.994.994 0 0 1 .047-.134Zm1.884.573.003.008c-.003-.005-.003-.008-.003-.008Zm.55 2.613s-.002-.002-.003-.007a.032.032 0 0 1 .003.007ZM4 14a1 1 0 0 1 1 1v4a1 1 0 1 1-2 0v-4a1 1 0 0 1 1-1Zm3-2a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Zm6.5-8a1 1 0 0 1 1-1H18a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-.796l-2.341 2.049a1 1 0 0 1-1.24.06l-2.894-2.066L6.614 9.29a1 1 0 1 1-1.228-1.578l4.5-3.5a1 1 0 0 1 1.195-.025l2.856 2.04L15.34 5h-.84a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+                            </svg>
+                        </span>
+                        <b>
+                            This Year
+                        </b>
+                    {% endcomponent %}
+
+                    {% component "unfold/components/title.html" with class="mt-3" %}
+                        {{general.avg.year}} S.A.R
+                    {% endcomponent %}
+                {% endcomponent %}
+
+            {% endcomponent %}
+
+
+            <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                Total Income
+            </h2>
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                <li class="me-2" role="presentation">
+                    <button class="flex gap-2 p-4 border-b-2 rounded-t-lg" id="general-daily-tab" data-tabs-target="#general-daily" type="button" role="tab" aria-controls="general-daily" aria-selected="false">
+                        Daily
+                    </button>
+                </li>
+                <li class="me-2" role="presentation">
+                    <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="general-monthly-tab" data-tabs-target="#general-monthly" type="button" role="tab" aria-controls="general-monthly" aria-selected="false">
+                        Monthly
+                    </button>
+                </li>
+                <li class="me-2" role="presentation">
+                    <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="general-yearly-tab" data-tabs-target="#general-yearly" type="button" role="tab" aria-controls="general-yearly" aria-selected="false">
+                        Yearly
+                    </button>
+                </li>
+            </ul>
+            <div id="default-tab-content">
+                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="general-daily" role="tabpanel" aria-labelledby="general-daily-tab">
+                    <div class="my-4">
+                        {% include "admin/components/line_chart.html" with id="g_ch_daily" x_data=general.daily_income.days y_data=general.daily_income.values data_title="Income (S.A.R)" chart_title="Total Income by Day" %}
+                    </div>
+                </div>
+                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="general-monthly" role="tabpanel" aria-labelledby="general-monthly-tab">
+                    <div class="my-4">
+                        {% include "admin/components/line_chart.html" with id="g_ch_monthly" x_data=general.monthly_income.months y_data=general.monthly_income.values data_title="Income (S.A.R)" chart_title="Total Income by Month" %}
+                    </div>
+                </div>
+                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="general-yearly" role="tabpanel" aria-labelledby="general-yearly-tab">
+                    <div class="my-4">
+                        {% include "admin/components/line_chart.html" with id="g_ch_yearly" x_data=general.yearly_income.years y_data=general.yearly_income.values data_title="Income (S.A.R)" chart_title="Total Income by Year" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="user" role="tabpanel" aria-labelledby="user-tab">
+            <div>
+                <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                    Our Users
+                </h2>
+                {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
+                    {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                        {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                            <span>
+                                <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                </svg>
+                            </span>
+                            <b>
+                                Buyers
+                            </b>
+                        {% endcomponent %}
+
+                        {% component "unfold/components/title.html" with class="mt-3" %}
+                            {{users.count.buyers}}
+                        {% endcomponent %}
+                    {% endcomponent %}
+
+                    {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                        {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                            <span>
+                                <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M12 2a7 7 0 0 0-7 7 3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1V9a5 5 0 1 1 10 0v7.083A2.919 2.919 0 0 1 14.083 19H14a2 2 0 0 0-2-2h-1a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1a2 2 0 0 0 1.732-1h.351a4.917 4.917 0 0 0 4.83-4H19a3 3 0 0 0 3-3v-2a3 3 0 0 0-3-3 7 7 0 0 0-7-7Zm1.45 3.275a4 4 0 0 0-4.352.976 1 1 0 0 0 1.452 1.376 2.001 2.001 0 0 1 2.836-.067 1 1 0 1 0 1.386-1.442 4 4 0 0 0-1.321-.843Z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <b>
+                                Suppliers
+                            </b>
+                        {% endcomponent %}
+
+                        {% component "unfold/components/title.html" with class="mt-3" %}
+                            {{users.count.suppliers}}
+                        {% endcomponent %}
+                    {% endcomponent %}
+                {% endcomponent %}
+            </div>
+
+            <div>
+                <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                    Active Users
+                </h2>
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg" id="active-users-daily-tab" data-tabs-target="#active-users-daily" type="button" role="tab" aria-controls="active-users-daily" aria-selected="false">
+                            Daily
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="active-users-monthly-tab" data-tabs-target="#active-users-monthly" type="button" role="tab" aria-controls="active-users-monthly" aria-selected="false">
+                            Monthly
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="active-users-yearly-tab" data-tabs-target="#active-users-yearly" type="button" role="tab" aria-controls="active-users-yearly" aria-selected="false">
+                            Yearly
+                        </button>
+                    </li>
+                </ul>
+                <div id="default-tab-content">
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="active-users-daily" role="tabpanel" aria-labelledby="active-users-daily-tab">
+                        <div class="my-4">
+                            {% include "admin/components/column_chart.html" with id="au_ch_daily" x_data=users.daily_active.days y1_data=users.daily_active.buyers y2_data=users.daily_active.suppliers data1_title="Buyers Count" data2_title="Suppliers Count" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="active-users-monthly" role="tabpanel" aria-labelledby="active-users-monthly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/column_chart.html" with id="au_ch_monthly" x_data=users.monthly_active.months y1_data=users.monthly_active.buyers y2_data=users.monthly_active.suppliers data1_title="Buyers Count" data2_title="Suppliers Count" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="active-users-yearly" role="tabpanel" aria-labelledby="active-users-yearly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/column_chart.html" with id="au_ch_yearly" x_data=users.yearly_active.years y1_data=users.yearly_active.buyers y2_data=users.yearly_active.suppliers data1_title="Buyers Count" data2_title="Suppliers Count" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                    New Users
+                </h2>
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg" id="new-users-daily-tab" data-tabs-target="#new-users-daily" type="button" role="tab" aria-controls="new-users-daily" aria-selected="false">
+                            Daily
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="new-users-monthly-tab" data-tabs-target="#new-users-monthly" type="button" role="tab" aria-controls="new-users-monthly" aria-selected="false">
+                            Monthly
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="new-users-yearly-tab" data-tabs-target="#new-users-yearly" type="button" role="tab" aria-controls="new-users-yearly" aria-selected="false">
+                            Yearly
+                        </button>
+                    </li>
+                </ul>
+                <div id="default-tab-content">
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="new-users-daily" role="tabpanel" aria-labelledby="new-users-daily-tab">
+                        <div class="my-4">
+                            {% include "admin/components/column_chart.html" with id="nu_ch_daily" x_data=users.daily_new.days y1_data=users.daily_new.buyers y2_data=users.daily_new.suppliers data1_title="Buyers Count" data2_title="Suppliers Count" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="new-users-monthly" role="tabpanel" aria-labelledby="new-users-monthly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/column_chart.html" with id="nu_ch_monthly" x_data=users.monthly_new.months y1_data=users.monthly_new.buyers y2_data=users.monthly_new.suppliers data1_title="Buyers Count" data2_title="Suppliers Count" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="new-users-yearly" role="tabpanel" aria-labelledby="new-users-yearly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/column_chart.html" with id="nu_ch_yearly" x_data=users.yearly_new.years y1_data=users.yearly_new.buyers y2_data=users.yearly_new.suppliers data1_title="Buyers Count" data2_title="Suppliers Count" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="product" role="tabpanel" aria-labelledby="product-tab">
+            <div>
+                <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                    Products Count
+                </h2>
+                
+                {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
+                    {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                        {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                            <span>
+                                <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12c.263 0 .524-.06.767-.175a2 2 0 0 0 .65-.491c.186-.21.333-.46.433-.734.1-.274.15-.568.15-.864a2.4 2.4 0 0 0 .586 1.591c.375.422.884.659 1.414.659.53 0 1.04-.237 1.414-.659A2.4 2.4 0 0 0 12 9.736a2.4 2.4 0 0 0 .586 1.591c.375.422.884.659 1.414.659.53 0 1.04-.237 1.414-.659A2.4 2.4 0 0 0 16 9.736c0 .295.052.588.152.861s.248.521.434.73a2 2 0 0 0 .649.488 1.809 1.809 0 0 0 1.53 0 2.03 2.03 0 0 0 .65-.488c.185-.209.332-.457.433-.73.1-.273.152-.566.152-.861 0-.974-1.108-3.85-1.618-5.121A.983.983 0 0 0 17.466 4H6.456a.986.986 0 0 0-.93.645C5.045 5.962 4 8.905 4 9.736c.023.59.241 1.148.611 1.567.37.418.865.667 1.389.697Zm0 0c.328 0 .651-.091.94-.266A2.1 2.1 0 0 0 7.66 11h.681a2.1 2.1 0 0 0 .718.734c.29.175.613.266.942.266.328 0 .651-.091.94-.266.29-.174.537-.427.719-.734h.681a2.1 2.1 0 0 0 .719.734c.289.175.612.266.94.266.329 0 .652-.091.942-.266.29-.174.536-.427.718-.734h.681c.183.307.43.56.719.734.29.174.613.266.941.266a1.819 1.819 0 0 0 1.06-.351M6 12a1.766 1.766 0 0 1-1.163-.476M5 12v7a1 1 0 0 0 1 1h2v-5h3v5h7a1 1 0 0 0 1-1v-7m-5 3v2h2v-2h-2Z"/>
+                                </svg>
+                            </span>
+                            <b>
+                                In Stock
+                            </b>
+                        {% endcomponent %}
+
+                        {% component "unfold/components/title.html" with class="mt-3" %}
+                            {{products.in_stock_count}}
+                        {% endcomponent %}
+                    {% endcomponent %}
+
+                    {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                        {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                            <span>
+                                <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                </svg>
+                            </span>
+                            <b>
+                                Out of Stock
+                            </b>
+                        {% endcomponent %}
+
+                        {% component "unfold/components/title.html" with class="mt-3" %}
+                            {{products.out_stock_count}}
+                        {% endcomponent %}
+                    {% endcomponent %}
+                {% endcomponent %}
+            </div>
+            <div>
+                <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                    New Products
+                </h2>
+
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg" id="new-products-daily-tab" data-tabs-target="#new-products-daily" type="button" role="tab" aria-controls="new-products-daily" aria-selected="false">
+                            Daily
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="new-products-monthly-tab" data-tabs-target="#new-products-monthly" type="button" role="tab" aria-controls="new-products-monthly" aria-selected="false">
+                            Monthly
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="new-products-yearly-tab" data-tabs-target="#new-products-yearly" type="button" role="tab" aria-controls="new-products-yearly" aria-selected="false">
+                            Yearly
+                        </button>
+                    </li>
+                </ul>
+                <div id="default-tab-content">
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="new-products-daily" role="tabpanel" aria-labelledby="new-products-daily-tab">
+                        <div class="my-4">
+                            {% include "admin/components/line_chart.html" with id="np_ch_daily" x_data=products.daily_new.days y_data=products.daily_new.new_products data_title="Products Count" chart_title="Daily New Products" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="new-products-monthly" role="tabpanel" aria-labelledby="new-products-monthly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/line_chart.html" with id="np_ch_monthly" x_data=products.monthly_new.months y_data=products.monthly_new.new_products data_title="Products Count" chart_title="Monthly New Products" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="new-products-yearly" role="tabpanel" aria-labelledby="new-products-yearly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/line_chart.html" with id="np_ch_yearly" x_data=products.yearly_new.years y_data=products.yearly_new.new_products data_title="Products Count" chart_title="Yearly New Products" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                    Newly Sold Products
+                </h2>
+
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg" id="new-sold-daily-tab" data-tabs-target="#new-sold-daily" type="button" role="tab" aria-controls="new-sold-daily" aria-selected="false">
+                            Daily
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="new-sold-monthly-tab" data-tabs-target="#new-sold-monthly" type="button" role="tab" aria-controls="new-sold-monthly" aria-selected="false">
+                            Monthly
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="new-sold-yearly-tab" data-tabs-target="#new-sold-yearly" type="button" role="tab" aria-controls="new-sold-yearly" aria-selected="false">
+                            Yearly
+                        </button>
+                    </li>
+                </ul>
+                <div id="default-tab-content">
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="new-sold-daily" role="tabpanel" aria-labelledby="new-sold-daily-tab">
+                        <div class="my-4">
+                            {% include "admin/components/line_chart.html" with id="ns_ch_daily" x_data=products.daily_sold.days y_data=products.daily_sold.sold_products data_title="Products Count" chart_title="Daily Sold Products" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="new-sold-monthly" role="tabpanel" aria-labelledby="new-sold-monthly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/line_chart.html" with id="ns_ch_monthly" x_data=products.monthly_sold.months y_data=products.monthly_sold.sold_products data_title="Products Count" chart_title="Monthly Sold Products" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="new-sold-yearly" role="tabpanel" aria-labelledby="new-sold-yearly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/line_chart.html" with id="ns_ch_yearly" x_data=products.yearly_sold.years y_data=products.yearly_sold.sold_products data_title="Products Count" chart_title="Yearly Sold Products" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="rfq" role="tabpanel" aria-labelledby="rfq-tab">
+            <div>
+                <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                    Quotes Count
+                </h2>
+                
+                {% component "unfold/components/flex.html" with class="gap-8 mb-8 flex-col lg:flex-row" %}
+                    {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                        {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                            <span>
+                                <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M6 6a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a3 3 0 0 1-3 3H5a1 1 0 1 0 0 2h1a5 5 0 0 0 5-5V8a2 2 0 0 0-2-2H6Zm9 0a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a3 3 0 0 1-3 3h-1a1 1 0 1 0 0 2h1a5 5 0 0 0 5-5V8a2 2 0 0 0-2-2h-3Z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <b>
+                                Total Quotes
+                            </b>
+                        {% endcomponent %}
+
+                        {% component "unfold/components/title.html" with class="mt-3" %}
+                            {{rfq.count}}
+                        {% endcomponent %}
+                    {% endcomponent %}    
+
+                    {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                        {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                            <span>
+                                <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <b>
+                                Approved Quotes
+                            </b>
+                        {% endcomponent %}
+
+                        {% component "unfold/components/title.html" with class="mt-3" %}
+                            {{rfq.approved}}
+                        {% endcomponent %}
+                    {% endcomponent %}
+
+                    {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                        {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                            <span>
+                                <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm7.707-3.707a1 1 0 0 0-1.414 1.414L10.586 12l-2.293 2.293a1 1 0 1 0 1.414 1.414L12 13.414l2.293 2.293a1 1 0 0 0 1.414-1.414L13.414 12l2.293-2.293a1 1 0 0 0-1.414-1.414L12 10.586 9.707 8.293Z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <b>
+                                Rejected Quotes
+                            </b>
+                        {% endcomponent %}
+
+                        {% component "unfold/components/title.html" with class="mt-3" %}
+                            {{rfq.rejected}}
+                        {% endcomponent %}
+                    {% endcomponent %}
+
+                    {% component "unfold/components/card.html" with class="lg:w-1/3 shadow-xl" %}
+                        {% component "unfold/components/text.html" with class="flex gap-2 items-center" %}
+                            <span>
+                                <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <b>
+                                Pending Quotes
+                            </b>
+                        {% endcomponent %}
+
+                        {% component "unfold/components/title.html" with class="mt-3" %}
+                            {{rfq.pending}}
+                        {% endcomponent %}
+                    {% endcomponent %}
+                {% endcomponent %}
+            </div>
+
+            <div>
+                <h2 class="text-3xl font-extrabold dark:text-white mb-5 mt-3">
+                    Quotes Value
+                </h2>
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg" id="rfq-value-daily-tab" data-tabs-target="#rfq-value-daily" type="button" role="tab" aria-controls="rfq-value-daily" aria-selected="false">
+                            Daily
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="rfq-value-monthly-tab" data-tabs-target="#rfq-value-monthly" type="button" role="tab" aria-controls="rfq-value-monthly" aria-selected="false">
+                            Monthly
+                        </button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button class="flex gap-2 p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="rfq-value-yearly-tab" data-tabs-target="#rfq-value-yearly" type="button" role="tab" aria-controls="rfq-value-yearly" aria-selected="false">
+                            Yearly
+                        </button>
+                    </li>
+                </ul>
+                <div id="default-tab-content">
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="rfq-value-daily" role="tabpanel" aria-labelledby="rfq-value-daily-tab">
+                        <div class="my-4">
+                            {% include "admin/components/area_chart.html" with id="rv_ch_daily" x_data=rfq.daily_value.days y_data=rfq.daily_value.values data_title="RFQ Count" chart_title="Daily New RFQ" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="rfq-value-monthly" role="tabpanel" aria-labelledby="rfq-value-monthly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/area_chart.html" with id="rv_ch_monthly" x_data=rfq.monthly_value.months y_data=rfq.monthly_value.values data_title="RFQ Count" chart_title="Monthly New RFQ" %}
+                        </div>
+                    </div>
+                    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="rfq-value-yearly" role="tabpanel" aria-labelledby="rfq-value-yearly-tab">
+                        <div class="my-4">
+                            {% include "admin/components/area_chart.html" with id="rv_ch_yearly" x_data=rfq.yearly_value.years y_data=rfq.yearly_value.values data_title="RFQ Count" chart_title="Yearly New RFQ" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+{% endblock %}

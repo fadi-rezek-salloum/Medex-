@@ -1,0 +1,44 @@
+<div id="{{id}}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script defer>
+  var options = {
+    series: [
+      {
+        name: "{{data_title}}",
+        data: {{y_data|safe}},
+      },
+    ],
+    chart: {
+      height: 450,
+      type: "area",
+      zoom: {
+        enabled: false
+      },
+      foreColor: "#888"
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    title: {
+      text: "{{chart_title}}",
+      align: "left",
+    },
+    grid: {
+      row: {
+        colors: ["#f1f1f1", "transparent"],
+        opacity: 0.1,
+      },
+    },
+    xaxis: {
+        categories: {{x_data|safe}}
+    },
+  };
+
+  var chart = new ApexCharts(document.querySelector("#{{id}}"), options);
+  chart.render();
+</script>
